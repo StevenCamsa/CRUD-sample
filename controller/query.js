@@ -1,10 +1,10 @@
 
-const pool = require('./db')
+const pool = require('../database/db')
 const jwt = require('jsonwebtoken');
 
 //=================CREATE=======================//
 const createItem = (request, response) => {
-  const { entity, details } = request.body
+  const { entity, details } = request.body;
 
   pool.query('INSERT INTO testing2 ( entity, details) VALUES ($1, $2 )', [ entity, details], (error, results) => {
     if (error) {
@@ -106,6 +106,23 @@ const loginUser = (request, response) => {
 
 };
 
+function verifyToken(req, res, next) {
+
+  const auth = req.headers['authorization'];
+  if (typeof auth !== 'undefined') {
+      const bearer = auth.split(' ');
+      const bearertoken = bearer[1];
+
+      req.token = bearertoken;
+
+      next();
+
+  } else {
+      res.sendStatus(403);
+  }
+};
+
+
 module.exports ={
 createItem,
 getItemById,
@@ -113,10 +130,10 @@ getAllItem,
 deleteItem,
 updateItem,
 userToken,
-loginUser
+loginUser,
+verifyToken
 
 
 }
-
 
 
