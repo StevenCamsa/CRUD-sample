@@ -1,7 +1,9 @@
 
 const pool = require('./db')
+const jwt = require('jsonwebtoken');
 
-const createUser = (request, response) => {
+//=================CREATE=======================//
+const createItem = (request, response) => {
   const { entity, details } = request.body
 
   pool.query('INSERT INTO testing2 ( entity, details) VALUES ($1, $2 )', [ entity, details], (error, results) => {
@@ -12,7 +14,8 @@ const createUser = (request, response) => {
   })
 }
 
-const getUserById = (request, response) => {
+//=================GET=ITEM======================//
+const getItemById = (request, response) => {
   
   const id = request.params.id;
   
@@ -25,7 +28,8 @@ const getUserById = (request, response) => {
   })
 }
 
-const getAllUsers=(request,response) =>{
+//=================GET=ALL=ITEM=====================//
+const getAllItem=(request,response) =>{
 
   pool.query('select * from testing2 ORDER BY ID asc', (error,results)=>
   {
@@ -36,8 +40,8 @@ const getAllUsers=(request,response) =>{
   )
 }
 
-
-const deleteUser= (request, response) => {
+//=================DELETE=======================//
+const deleteItem= (request, response) => {
   
   const id = request.params.id;
   
@@ -51,8 +55,8 @@ const deleteUser= (request, response) => {
   })
 }
 
-
-const updateUser= (request, response) =>
+//=================UPDATE=======================//
+const updateItem= (request, response) =>
 {
   const id = request.params.id;
   const {entity,details} = request.body
@@ -66,14 +70,51 @@ const updateUser= (request, response) =>
     response.status(200).send(`data is updated`)
   })
 }
+//=================TOKEN=======================//
+const userToken = (request, response) =>
+{
+  const user = {
+    id: 1,
+    username: 'john',
+    email: 'john@gmail.com'
 
+};
+
+jwt.sign({
+    user
+}, 'secretkey', {expiresIn:'30min'},(err, token) => {
+    response.json({
+        token
+    });
+});
+
+}
+
+//=================VERIFY=======================//
+const loginUser = (request, response) => {
+  jwt.verify(request.token, 'secretkey', (err, authData) =>{
+      if(err){
+          response.sendStatus(403)
+      }else{
+             response.json({
+      message: "Logged IN",
+      authData
+  });
+      }
+
+  });
+
+};
 
 module.exports ={
-createUser,
-getUserById,
-getAllUsers,
-deleteUser,
-updateUser
+createItem,
+getItemById,
+getAllItem,
+deleteItem,
+updateItem,
+userToken,
+loginUser
+
 
 }
 
