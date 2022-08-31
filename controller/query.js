@@ -33,6 +33,7 @@ const getAllItem=(request,response) =>{
 
   pool.query('select * from testing2 ORDER BY ID asc', (error,results)=>
   {
+    console.log(results);
     if(error)
     throw error
     response.status(200).json(results.rows)

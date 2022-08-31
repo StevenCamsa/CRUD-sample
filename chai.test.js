@@ -19,7 +19,7 @@ describe("GET /", () => {
     it("it should get the items ",  async() => {
         const res = await request(app)
         .get('/items')
-         console.log('res',res)
+        //  console.log('res',res)
         expect(res.statusCode).to.eql(200);
     
     });
@@ -27,23 +27,23 @@ describe("GET /", () => {
     it("it create new item", async() => {
         const res2 = await request(app)
         .post('/addItem')
-        console.log('res', res2)
+        // console.log('res', res2)
         expect(res2.statusCode).to.eql(201)
 
     });
 
-    it("it updates item", async() => {
+    it("it updates an item", async() => {
         const res3 = await request(app)
         .put('/updateItem/1')
-        console.log('res', res3)
+        // console.log('res', res3)
         expect(res3.statusCode).to.eql(200)
 
     });
 
-    it("it delete item", async() => {
+    it("it delete an item", async() => {
         const res4 = await request(app)
         .delete('/deleteItem/1')
-        console.log('res', res4)
+        // console.log('res', res4)
         expect(res4.statusCode).to.eql(200)
 
     });

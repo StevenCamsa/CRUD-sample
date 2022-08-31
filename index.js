@@ -13,6 +13,6 @@ app.use('/', require('./routes/routes'));
 
 
 
-// app.listen(3000,() => console.log('listening to the port 3000'));
+app.listen(3000,() => console.log('listening to the port 3000'));
 
 module.exports = app;
