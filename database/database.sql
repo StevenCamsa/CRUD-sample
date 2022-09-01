@@ -1,3 +1,6 @@
+CREATE DATABASE usertesting;
+
+
 
 CREATE TABLE testing2 (
     ID SERIAL PRIMARY KEY,
