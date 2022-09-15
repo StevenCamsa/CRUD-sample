@@ -1,10 +1,14 @@
 const app = require('./index');
 const expect = require('chai').expect;
 const request = require('supertest');
+const db = require('./database/db')
+
+
 
 
 
 describe("group", () => {
+  
 
     it('add 1 + 2 to equal 3', async () => {
         expect(1 + 2).to.eql(3);
@@ -15,6 +19,9 @@ describe("group", () => {
     
 
 describe("GET /", () => {
+
+ 
+
 
     it("it should get the items ",  async() => {
         const res = await request(app)
